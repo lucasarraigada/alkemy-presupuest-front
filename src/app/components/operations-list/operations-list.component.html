@@ -1,1 +1,48 @@
-<p>operations-list works!</p>
+<div class="card text-white bg-danger mb-3" *ngIf="balance.balance != null">
+    <div class="card-body ">
+        Balance: $ {{balance.balance}}
+    </div>
+</div>
+
+<div class="card text-white bg-danger mb-3" *ngIf="balance.balance == null">
+    <div class="card-body ">
+        Balance: $ {{balance.amount}}
+    </div>
+</div>
+
+<div class="container">
+    <h1>Operation-List</h1>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <input type="text" class="form-control" name="filterOperation" placeholder="Search for concept" [(ngModel)]="filterOperation">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Operation Type</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let operation of operations | filter: filterOperation">
+                        <td>{{operation.concept}}</td>
+                        <td>{{operation.amount}}</td>
+                        <td>{{operation.date | date: 'dd-MM-yyyy'}}</td>
+                        <td *ngIf="operation.operationType == 1">{{operationIncome[0]}}</td>
+                        <td *ngIf="operation.operationType == 2">{{operationExpense[0]}}</td>
+                        <a class="btn btn-danger btn-block " (click)="deleteOperation(operation.id) ">Delete</a>
+                        <a [routerLink]="[ '/operation/edit/', operation.id] " routerLinkActive="router-link-active " class="btn btn-info btn-block ">Update</a>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
